@@ -4,7 +4,7 @@
  * Supabase Dashboard > Project Settings > API.
  * Jangan pernah menaruh service_role key di browser.
  */
-const SUPABASE_URL = "https://kaspemuda-pemudi08.com";
+const SUPABASE_URL = "https://kaspemuda-pemudi08.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_AXOpKtg6JIM2_6wASk7dsQ_0UAbQ_QH";
 
 const authView = document.getElementById("authView");
