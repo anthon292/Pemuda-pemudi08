@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#166534">
+  <title>Kas Keuangan RT 08</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">RT</div>
+    <div>
+      <h1>Kas Keuangan RT 08</h1>
+      <p>Transparan, tertib, dan terpercaya</p>
+    </div>
+    <button id="logoutBtn" class="button button-ghost hidden">Keluar</button>
+  </header>
+
+  <main class="container">
+    <section id="authView" class="auth-card">
+      <div class="section-heading">
+        <p class="eyebrow">PORTAL WARGA</p>
+        <h2>Masuk ke akun Anda</h2>
+        <p>Silakan login untuk melihat laporan kas RT 08.</p>
+      </div>
+      <form id="loginForm" class="form-grid">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="username" placeholder="nama@email.com" required>
+        <label for="password">Kata sandi</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" required>
+        <button class="button button-primary" type="submit">Login</button>
+        <p id="authMessage" class="message" role="status"></p>
+      </form>
+      <p class="small-note">Akun warga dibuat oleh pengelola/admin. Pendaftaran publik tidak tersedia.</p>
+    </section>
+
+    <section id="appView" class="hidden">
+      <div class="welcome-row">
+        <div>
+          <p class="eyebrow">DASHBOARD KEUANGAN</p>
+          <h2>Ringkasan kas RT 08</h2>
+          <p id="userLabel" class="muted"></p>
+        </div>
+        <span id="roleBadge" class="badge">Warga</span>
+      </div>
+
+      <div class="summary-grid">
+        <article class="summary-card balance-card">
+          <span>Saldo kas</span>
+          <strong id="balanceValue">Rp0</strong>
+          <small>Saldo dihitung dari seluruh transaksi</small>
+        </article>
+        <article class="summary-card">
+          <span>Total pemasukan</span>
+          <strong id="incomeValue">Rp0</strong>
+          <small>Akumulasi uang masuk</small>
+        </article>
+        <article class="summary-card">
+          <span>Total pengeluaran</span>
+          <strong id="expenseValue">Rp0</strong>
+          <small>Akumulasi uang keluar</small>
+        </article>
+      </div>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Riwayat transaksi</h3>
+            <p class="muted">Seluruh warga yang login dapat melihat daftar ini.</p>
+          </div>
+          <div class="toolbar">
+            <label class="month-filter" for="monthFilter">Periode
+              <input id="monthFilter" type="month">
+            </label>
+            <button id="pdfBtn" class="button button-secondary" type="button">Unduh laporan PDF</button>
+          </div>
+        </div>
+
+        <div id="adminFormWrap" class="admin-box hidden">
+          <h3 id="formTitle">Tambah transaksi</h3>
+          <form id="transactionForm" class="transaction-form">
+            <input id="transactionId" type="hidden">
+            <label>Tanggal
+              <input id="transactionDate" type="date" required>
+            </label>
+            <label>Jenis
+              <select id="transactionType" required>
+                <option value="pemasukan">Pemasukan</option>
+                <option value="pengeluaran">Pengeluaran</option>
+              </select>
+            </label>
+            <label>Kategori
+              <input id="transactionCategory" maxlength="80" placeholder="Contoh: Iuran warga" required>
+            </label>
+            <label>Jumlah (Rp)
+              <input id="transactionAmount" type="number" min="1" step="1" placeholder="100000" required>
+            </label>
+            <label class="wide-field">Keterangan
+              <input id="transactionDescription" maxlength="250" placeholder="Keterangan transaksi" required>
+            </label>
+            <div class="form-actions wide-field">
+              <button class="button button-primary" type="submit" id="saveTransactionBtn">Simpan transaksi</button>
+              <button class="button button-ghost hidden" type="button" id="cancelEditBtn">Batal edit</button>
+              <p id="transactionMessage" class="message" role="status"></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th><th>Jenis</th><th>Kategori / Keterangan</th>
+                <th class="number">Pemasukan</th><th class="number">Pengeluaran</th><th class="number">Saldo berjalan*</th>
+                <th id="actionHeader" class="hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="transactionRows">
+              <tr><td colspan="7" class="empty-state">Memuat transaksi...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote">*Saldo berjalan dihitung berdasarkan urutan tanggal dan waktu pencatatan. Filter periode hanya memfilter daftar; kartu ringkasan tetap menunjukkan total keseluruhan.</p>
+      </section>
+    </section>
+    <div id="globalMessage" class="global-message hidden" role="status"></div>
+  </main>
+
+  <footer class="footer">Kas Keuangan RT 08 · Laporan internal warga</footer>
+
+  <!-- Gunakan versi CDN resmi; untuk produksi, versi dapat dipatok saat deploy. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
